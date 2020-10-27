@@ -1,0 +1,128 @@
+Thread count: 2
+Algorithm: m    N: 500  Total time: 71ms
+Algorithm: mp   N: 500  Total time: 64ms
+Algorithm: mpd  N: 500  Total time: 53ms
+
+Algorithm: m    N: 600  Total time: 84ms
+Algorithm: mp   N: 600  Total time: 92ms
+Algorithm: mpd  N: 600  Total time: 79ms
+
+Algorithm: m    N: 700  Total time: 114ms
+Algorithm: mp   N: 700  Total time: 118ms
+Algorithm: mpd  N: 700  Total time: 105ms
+
+Algorithm: m    N: 800  Total time: 155ms
+Algorithm: mp   N: 800  Total time: 164ms
+Algorithm: mpd  N: 800  Total time: 145ms
+
+Algorithm: m    N: 900  Total time: 197ms
+Algorithm: mp   N: 900  Total time: 206ms
+Algorithm: mpd  N: 900  Total time: 184ms
+
+Algorithm: m    N: 1000 Total time: 244ms
+Algorithm: mp   N: 1000 Total time: 254ms
+Algorithm: mpd  N: 1000 Total time: 227ms
+
+
+Thread count: 4
+Algorithm: m    N: 500  Total time: 58ms
+Algorithm: mp   N: 500  Total time: 60ms
+Algorithm: mpd  N: 500  Total time: 54ms
+
+Algorithm: m    N: 600  Total time: 83ms
+Algorithm: mp   N: 600  Total time: 86ms
+Algorithm: mpd  N: 600  Total time: 76ms
+
+Algorithm: m    N: 700  Total time: 111ms
+Algorithm: mp   N: 700  Total time: 117ms
+Algorithm: mpd  N: 700  Total time: 109ms
+
+Algorithm: m    N: 800  Total time: 146ms
+Algorithm: mp   N: 800  Total time: 152ms
+Algorithm: mpd  N: 800  Total time: 135ms
+
+Algorithm: m    N: 900  Total time: 184ms
+Algorithm: mp   N: 900  Total time: 193ms
+Algorithm: mpd  N: 900  Total time: 171ms
+
+Algorithm: m    N: 1000 Total time: 240ms
+Algorithm: mp   N: 1000 Total time: 256ms
+Algorithm: mpd  N: 1000 Total time: 226ms
+
+
+Thread count: 8
+Algorithm: m    N: 500  Total time: 57ms
+Algorithm: mp   N: 500  Total time: 60ms
+Algorithm: mpd  N: 500  Total time: 53ms
+
+Algorithm: m    N: 600  Total time: 82ms
+Algorithm: mp   N: 600  Total time: 87ms
+Algorithm: mpd  N: 600  Total time: 75ms
+
+Algorithm: m    N: 700  Total time: 112ms
+Algorithm: mp   N: 700  Total time: 119ms
+Algorithm: mpd  N: 700  Total time: 103ms
+
+Algorithm: m    N: 800  Total time: 148ms
+Algorithm: mp   N: 800  Total time: 154ms
+Algorithm: mpd  N: 800  Total time: 135ms
+
+Algorithm: m    N: 900  Total time: 184ms
+Algorithm: mp   N: 900  Total time: 193ms
+Algorithm: mpd  N: 900  Total time: 170ms
+
+Algorithm: m    N: 1000 Total time: 238ms
+Algorithm: mp   N: 1000 Total time: 253ms
+Algorithm: mpd  N: 1000 Total time: 226ms
+
+
+Thread count: 16
+Algorithm: m    N: 500  Total time: 58ms
+Algorithm: mp   N: 500  Total time: 60ms
+Algorithm: mpd  N: 500  Total time: 55ms
+
+Algorithm: m    N: 600  Total time: 82ms
+Algorithm: mp   N: 600  Total time: 86ms
+Algorithm: mpd  N: 600  Total time: 78ms
+
+Algorithm: m    N: 700  Total time: 111ms
+Algorithm: mp   N: 700  Total time: 117ms
+Algorithm: mpd  N: 700  Total time: 104ms
+
+Algorithm: m    N: 800  Total time: 145ms
+Algorithm: mp   N: 800  Total time: 154ms
+Algorithm: mpd  N: 800  Total time: 136ms
+
+Algorithm: m    N: 900  Total time: 183ms
+Algorithm: mp   N: 900  Total time: 194ms
+Algorithm: mpd  N: 900  Total time: 170ms
+
+Algorithm: m    N: 1000 Total time: 241ms
+Algorithm: mp   N: 1000 Total time: 253ms
+Algorithm: mpd  N: 1000 Total time: 229ms
+
+
+Thread count: 32
+Algorithm: m    N: 500  Total time: 58ms
+Algorithm: mp   N: 500  Total time: 60ms
+Algorithm: mpd  N: 500  Total time: 54ms
+
+Algorithm: m    N: 600  Total time: 82ms
+Algorithm: mp   N: 600  Total time: 86ms
+Algorithm: mpd  N: 600  Total time: 77ms
+
+Algorithm: m    N: 700  Total time: 112ms
+Algorithm: mp   N: 700  Total time: 118ms
+Algorithm: mpd  N: 700  Total time: 105ms
+
+Algorithm: m    N: 800  Total time: 145ms
+Algorithm: mp   N: 800  Total time: 154ms
+Algorithm: mpd  N: 800  Total time: 134ms
+
+Algorithm: m    N: 900  Total time: 187ms
+Algorithm: mp   N: 900  Total time: 195ms
+Algorithm: mpd  N: 900  Total time: 171ms
+
+Algorithm: m    N: 1000 Total time: 241ms
+Algorithm: mp   N: 1000 Total time: 253ms
+Algorithm: mpd  N: 1000 Total time: 226ms
