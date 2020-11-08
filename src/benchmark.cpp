@@ -35,6 +35,6 @@ void bench(string label, int threads, int n, int times, valarray<int> function(v
     cout << label
          << ":" << threads
          << ":" << n
-         << ":" << floor<milliseconds>(total_elapsed).count()
+         << ":" << (floor<milliseconds>(total_elapsed / times).count())
          << endl;
 }

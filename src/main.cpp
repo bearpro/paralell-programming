@@ -28,7 +28,6 @@ void test()
     print(m, 3, 3);
     print(multiply(m, v), 1, 3);
     print(multiply_parallel(m, v), 1, 3);
-    print(multiply_parallel_dumb(m, v), 1, 3);
 }
 
 int main()
@@ -49,9 +48,13 @@ int main()
         for (size_t i = 0; i < test_amount.size(); i++)
         {
             int n = test_amount[i];
-            bench("single", thread_count[ti], n, test_repeat, multiply);
             bench("parallel", thread_count[ti], n, test_repeat, multiply_parallel);
-            //bench("mpd", thread_count[ti], n, test_repeat, multiply_parallel_dumb);
         }
     }
+    for (size_t i = 0; i < test_amount.size(); i++)
+    {
+        int n = test_amount[i];
+        bench("single", 1, n, test_repeat, multiply);
+    }
+    
 }
