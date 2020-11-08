@@ -49,9 +49,9 @@ int main()
         for (size_t i = 0; i < test_amount.size(); i++)
         {
             int n = test_amount[i];
-            bench("m", thread_count[ti], n, test_repeat, multiply);
-            bench("mp", thread_count[ti], n, test_repeat, multiply_parallel);
-            bench("mpd", thread_count[ti], n, test_repeat, multiply_parallel_dumb);
+            bench("single", thread_count[ti], n, test_repeat, multiply);
+            bench("parallel", thread_count[ti], n, test_repeat, multiply_parallel);
+            //bench("mpd", thread_count[ti], n, test_repeat, multiply_parallel_dumb);
         }
     }
 }

@@ -18,7 +18,7 @@ valarray<int> multiply_parallel(valarray<int> matrix, valarray<int> vector)
 {
     auto n = vector.size();
     auto result = valarray<int>(n);
-    #pragma omp for
+    #pragma omp parallel for shared(result, n, matrix, vector)
     for (size_t i = 0; i < matrix.size(); i++)
     {
         auto j = i % n;
@@ -49,7 +49,7 @@ valarray<int> multiply_parallel_dumb(valarray<int> matrix, valarray<int> vector)
 
     auto n = vector.size();
 
-    #pragma omp for
+    #pragma omp parallel for shared(thread_count, counted_by_single_thread, partial_results, n)
     for (int thread_index = 0; thread_index < thread_count; thread_index++)
     {
         auto thread_result = valarray<int>(n);
