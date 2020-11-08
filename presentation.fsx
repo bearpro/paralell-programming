@@ -40,6 +40,8 @@ module Metrics =
         acceleration / (float processes)
     let acceleration parallelTime linearTime : float = 
         linearTime / parallelTime
+    let cost (processes: int) parallelTime = 
+        (float processes) * parallelTime
 
 let accelerationByThreadCount =
     parallelResults
@@ -50,9 +52,7 @@ let accelerationByThreadCount =
         {| Processes = parallel.Processes
            Acceleration = acceleration
            Amount = linear.Amount
-           Efficiency = efficiency |}
-    )
-    
+           Efficiency = efficiency |})
 
 let formatAcceleration 
     (data: seq<{| Acceleration: float; Amount: int; Efficiency: float; Processes: int |}>) =
@@ -60,4 +60,20 @@ let formatAcceleration
     for item in data do
         printfn "%a:%d:%d:%a" formatFloat item.Acceleration item.Processes item.Amount formatFloat item.Efficiency
 
-formatAcceleration accelerationByThreadCount
+
+let costByProcessesAndAmount =
+    parallelResults
+    |> Seq.map (fun x -> 
+        {| Cost = Metrics.cost x.Processes x.Time
+           Processes = x.Processes
+           Amount = x.Amount |})
+
+let formatCost 
+    (data: seq<{| Amount: int; Cost: float; Processes: int |}>) =
+    printfn "Стоимость"
+    for item in data do
+        printfn "%d:%d:%a" item.Amount item.Processes formatFloat item.Cost 
+
+accelerationByThreadCount |> formatAcceleration
+costByProcessesAndAmount  |> formatCost
+
