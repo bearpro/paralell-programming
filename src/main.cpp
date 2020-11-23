@@ -38,9 +38,9 @@ int main()
     #endif
     // test();
     // valarray<int> test_amount = {3, 9, 30, 100, 1000, 10000, 100000};
-    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000};
+    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
     valarray<int> thread_count = {2, 4, 8, 16, 32};
-    auto test_repeat = 8;
+    auto test_repeat = 50;
     omp_set_dynamic(0);
     for (size_t ti = 0; ti < thread_count.size(); ti++)
     {

@@ -9,10 +9,13 @@ let multiThread, singleThread = "parallel", "single"
 
 let path = fsi.CommandLineArgs.[1]
 
-let formatFloat (tw:TextWriter) value =
+let formatFloat (value: float) =
     (sprintf "%.2f" value)
         .Replace('.', ',')
-    |> tw.Write 
+
+let formatFloatA (tw:TextWriter) value =
+    tw.Write (formatFloat value)
+    
 
 type Line =
   { Algorithm: string
@@ -20,7 +23,7 @@ type Line =
     Amount: int
     Time: float }
 
-let source = 
+let allResults = 
     let parseLine (line: string) =
         let items = line.Split(":")
         { Algorithm = items.[0]
@@ -30,10 +33,10 @@ let source =
     
     File.ReadAllLines(path)
     |> Seq.map parseLine
-        
 
-let parallelResults = source |> Seq.where ^ fun line -> line.Algorithm = multiThread
-let linearResults = source |> Seq.where ^ fun line -> line.Algorithm = singleThread
+let parallelResults = allResults |> Seq.where ^ fun line -> line.Algorithm = multiThread
+
+let linearResults = allResults |> Seq.where ^ fun line -> line.Algorithm = singleThread
 
 module Metrics = 
     let efficiency acceleration (processes: int) : float = 
@@ -43,37 +46,54 @@ module Metrics =
     let cost (processes: int) parallelTime = 
         (float processes) * parallelTime
 
-let accelerationByThreadCount =
-    parallelResults
-    |> Seq.map (fun parallel -> 
+
+type MetricsLine = 
+  { Acceleration: float
+    Amount: int
+    Efficiency: float
+    Processes: int 
+    Cost: float }
+
+let metrics (source: seq<Line>) =
+    source
+    |> Seq.map ^ fun parallel -> 
         let linear = linearResults |> Seq.find ^ fun x -> x.Amount = parallel.Amount
         let acceleration = Metrics.acceleration parallel.Time linear.Time
         let efficiency = Metrics.efficiency acceleration parallel.Processes
-        {| Processes = parallel.Processes
-           Acceleration = acceleration
-           Amount = linear.Amount
-           Efficiency = efficiency |})
+        let cost = Metrics.cost parallel.Processes parallel.Time
+        { Processes = parallel.Processes
+          Acceleration = acceleration
+          Amount = linear.Amount
+          Efficiency = efficiency
+          Cost = cost }
+let matrix selector source = 
+    // Потоков:Ускорение_при_N1:Ускорение_при_N2...
+    source
+    |> Seq.sortBy ^ fun x -> x.Amount 
+    |> Seq.groupBy ^ fun x -> x.Amount 
+    |> Seq.map ^ fun (x, xs) -> 
+        let values = 
+            xs
+            |> Seq.sortBy ^ fun x -> x.Amount 
+            |> Seq.fold (fun a b -> sprintf "%s:%s" a (formatFloat (selector b))) ""
+        sprintf "%d%s" x values
 
-let formatAcceleration 
-    (data: seq<{| Acceleration: float; Amount: int; Efficiency: float; Processes: int |}>) =
-    printfn "Ускорение и эффективность"
+let format label data =
+    printfn "%s" label
     for item in data do
-        printfn "%a:%d:%d:%a" formatFloat item.Acceleration item.Processes item.Amount formatFloat item.Efficiency
+        printfn "%s" item
 
+allResults
+|> metrics
+|> matrix ^ fun x -> x.Acceleration
+|> format "Ускорение"
 
-let costByProcessesAndAmount =
-    parallelResults
-    |> Seq.map (fun x -> 
-        {| Cost = Metrics.cost x.Processes x.Time
-           Processes = x.Processes
-           Amount = x.Amount |})
+allResults
+|> metrics
+|> matrix ^ fun x -> x.Efficiency
+|> format "Эффективность"
 
-let formatCost 
-    (data: seq<{| Amount: int; Cost: float; Processes: int |}>) =
-    printfn "Стоимость"
-    for item in data do
-        printfn "%d:%d:%a" item.Amount item.Processes formatFloat item.Cost 
-
-accelerationByThreadCount |> formatAcceleration
-costByProcessesAndAmount  |> formatCost
-
+parallelResults
+|> metrics
+|> matrix ^ fun x -> x.Cost
+|> format "Стоимость"

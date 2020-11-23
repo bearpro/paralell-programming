@@ -32,9 +32,9 @@ void bench(string label, int threads, int n, int times, valarray<int> function(v
         auto elapsed = system_clock::now() - started;
         total_elapsed += elapsed;
     }
-    cout << label
-         << ":" << threads
-         << ":" << n
-         << ":" << (floor<milliseconds>(total_elapsed / times).count())
-         << endl;
+    cout << label // Название алгоритма
+            << ":" << threads // Количество потоков
+            << ":" << n // Размер входных данных
+            << ":" << (floor<milliseconds>(total_elapsed / times).count()) // Время выполнения
+            << endl;
 }
