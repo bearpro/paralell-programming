@@ -3,17 +3,18 @@
 #include <chrono>
 #include <valarray>
 
-#include "Algorithm.h"
+// #include "Algorithm.h"
 #include "Benchmark.h"
 
 #define LAB2
 
 #ifdef LAB1
-#include "lab1/MultiplyLinear.h"
-#include "lab1/MultiplyParallel.h"
+#include "lab1/MultiplyMatrixLinear.h"
+#include "lab1/MultiplyMatrixParallel.h"
 #endif
 #ifdef LAB2
-#include "lab2/FloydWarshall.h"
+#include "lab2/FloydWarshallLinear.h"
+#include "lab2/FloydWarshallParallel.h"
 #endif
 
 
@@ -21,7 +22,7 @@ using namespace std;
 using namespace chrono;
 
 
-auto test_repeat = 5;
+auto test_repeat = 1;
 
 void bench_parallel(valarray<int> amounts, Algorithm* alg)
 {
@@ -40,6 +41,7 @@ void bench_parallel(valarray<int> amounts, Algorithm* alg)
 
 void bench_linear(valarray<int> amounts, Algorithm* alg)
 {
+    omp_set_dynamic(0);
     for (size_t i = 0; i < amounts.size(); i++)
     {
         int n = amounts[i];
@@ -50,18 +52,19 @@ void bench_linear(valarray<int> amounts, Algorithm* alg)
 
 int main()
 {
+    srand(16);
     #ifdef _OPENMP
     printf("[*]Compiled with OpenMP\n");
     printf("[*]Maximum number of threads: %d\n", omp_get_max_threads());
     #endif
     #ifdef LAB1
     valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
-    bench_linear(test_amount, new MultiplyLinear());
-    bench_parallel(test_amount, new MultiplyParallel());
+    bench_linear(test_amount, new MultiplyMatrixLinear());
+    bench_parallel(test_amount, new MultiplyMatrixParallel());
     #endif
     #ifdef LAB2
-    valarray<int> test_amount = {9, 10, 50, 51, 52, 100, 101};
-    bench_linear(test_amount, new FloydWarshall());
-
-#endif
+    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
+    bench_linear(test_amount, new FloydWarshallLinear());
+    bench_parallel(test_amount, new FloydWarshallParallel());
+    #endif
 }

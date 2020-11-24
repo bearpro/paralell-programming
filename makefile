@@ -1,2 +1,2 @@
 all:
-	g++ -fopenmp -O0 -o bin/program src/*.cpp
+	g++ -fopenmp -ggdb -Wall -o bin/program src/*.cpp

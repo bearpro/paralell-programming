@@ -9,7 +9,7 @@ using namespace std;
 #ifndef MULTIPLY_H
 #define MULTIPLY_H
 
-class Multiply : public Algorithm
+class MultiplyMatrixBase : public Algorithm
 {
 protected:
     valarray<int> matrix;
