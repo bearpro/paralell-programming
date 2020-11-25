@@ -35,7 +35,7 @@ public:
                 }
             }
         }
-        n = n;
+        this->n = n;
     }
 };
 

@@ -5,7 +5,7 @@ open System.IO
 #nowarn "46"
 let (^) f x = f x
 
-let multiThread, singleThread = "parallel", "single"
+let multiThread, singleThread = "floydwarshall_parallel", "floydwarshall_linear"
 
 let path = fsi.CommandLineArgs.[1]
 

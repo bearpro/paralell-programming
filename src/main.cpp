@@ -22,7 +22,7 @@ using namespace std;
 using namespace chrono;
 
 
-auto test_repeat = 1;
+auto test_repeat = 10;
 
 void bench_parallel(valarray<int> amounts, Algorithm* alg)
 {
@@ -63,7 +63,7 @@ int main()
     bench_parallel(test_amount, new MultiplyMatrixParallel());
     #endif
     #ifdef LAB2
-    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
+    valarray<int> test_amount = {100, 200, 300, 400, 500};
     bench_linear(test_amount, new FloydWarshallLinear());
     bench_parallel(test_amount, new FloydWarshallParallel());
     #endif

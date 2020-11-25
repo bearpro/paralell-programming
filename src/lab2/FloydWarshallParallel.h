@@ -12,19 +12,12 @@ class FloydWarshallParallel : public FloydWarshallBase
 {
 private:
     valarray<omp_lock_t> lock_objects;
-    double safe_get(int i, int j)
-    {
-        auto n = matrix->size();
-        omp_set_lock(&lock_objects[i * n + j]);
-        auto value = (*matrix)[i * n + j];
-        omp_unset_lock(&lock_objects[i * n + j]);
-        return value;
-    }
+    
     void safe_set(int i, int j, double value)
     {
         auto n = matrix->size();
         omp_set_lock(&lock_objects[i * n + j]);
-        matrix[i * n + j] = value;
+        (*matrix)[i * n + j] = value;
         omp_unset_lock(&lock_objects[i * n + j]);
     }
 
@@ -45,6 +38,7 @@ public:
     {
         for (int k = 0; k < n; k++)
         {
+            #pragma omp parallel for
             for (int i = 0; i < n; i++)
             {
                 auto v = (*matrix)[i * n + k];
@@ -53,7 +47,7 @@ public:
                     auto val = v + (*matrix)[k * n + j];
                     if ((*matrix)[i * n + j] > val)
                     {
-                        (*matrix)[i * n + j] = val;
+                        safe_set(i, j, val);
                     }
                 }
             }

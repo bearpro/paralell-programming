@@ -26,10 +26,10 @@ public:
             auto elapsed = system_clock::now() - started;
             total_elapsed += elapsed;
         }
-        cout << algorithm->GetLabel()                                       // Название алгоритма
-             << ":" << threads                                              // Количество потоков
-             << ":" << n                                                    // Размер входных данных
-             << ":" << (floor<nanoseconds>(total_elapsed / times).count())  // Время выполнения
+        cout << algorithm->GetLabel()                                        // Название алгоритма
+             << ":" << threads                                               // Количество потоков
+             << ":" << n                                                     // Размер входных данных
+             << ":" << (floor<milliseconds>(total_elapsed / times).count())  // Время выполнения
              << endl;
     }
 };
