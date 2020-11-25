@@ -3,58 +3,68 @@
 #include <chrono>
 #include <valarray>
 
-#include "benchmark.h"
-#include "multiply.h"
+// #include "Algorithm.h"
+#include "Benchmark.h"
+
+#define LAB2
+
+#ifdef LAB1
+#include "lab1/MultiplyMatrixLinear.h"
+#include "lab1/MultiplyMatrixParallel.h"
+#endif
+#ifdef LAB2
+#include "lab2/FloydWarshallLinear.h"
+#include "lab2/FloydWarshallParallel.h"
+#endif
+
 
 using namespace std;
 using namespace chrono;
 
 
-void print(valarray<int> matrix, int w, int h)
-{
-    for (size_t i = 0; i < matrix.size(); i++)
-    {
-        if (i % w == 0)
-            printf("\n");
-        printf("%d ", matrix[i]);
-    }
-    printf("\n^^^^^^^^^^\n");
-}
+auto test_repeat = 10;
 
-void test()
+void bench_parallel(valarray<int> amounts, Algorithm* alg)
 {
-    valarray<int> m = {2, 4, 0, -2, 1, 3, -1, 0, 1};
-    valarray<int> v = {1, 2, -1};
-    print(m, 3, 3);
-    print(multiply(m, v), 1, 3);
-    print(multiply_parallel(m, v), 1, 3);
-}
-
-int main()
-{
-    #ifdef _OPENMP
-    printf("[*]Compiled with OpenMP\n");
-    printf("[*]Maximum number of threads: %d\n", omp_get_max_threads());
-    #endif
-    // test();
-    // valarray<int> test_amount = {3, 9, 30, 100, 1000, 10000, 100000};
-    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
     valarray<int> thread_count = {2, 4, 8, 16, 32};
-    auto test_repeat = 50;
     omp_set_dynamic(0);
     for (size_t ti = 0; ti < thread_count.size(); ti++)
     {
         omp_set_num_threads(thread_count[ti]);
-        for (size_t i = 0; i < test_amount.size(); i++)
+        for (size_t i = 0; i < amounts.size(); i++)
         {
-            int n = test_amount[i];
-            bench("parallel", thread_count[ti], n, test_repeat, multiply_parallel);
+            int n = amounts[i];
+            Benchmark::bench(thread_count[ti], n, test_repeat, alg);
         }
     }
-    for (size_t i = 0; i < test_amount.size(); i++)
+}
+
+void bench_linear(valarray<int> amounts, Algorithm* alg)
+{
+    omp_set_dynamic(0);
+    for (size_t i = 0; i < amounts.size(); i++)
     {
-        int n = test_amount[i];
-        bench("single", 1, n, test_repeat, multiply);
+        int n = amounts[i];
+        Benchmark::bench(1, n, test_repeat, alg);
     }
-    
+    return;
+}
+
+int main()
+{
+    srand(16);
+    #ifdef _OPENMP
+    printf("[*]Compiled with OpenMP\n");
+    printf("[*]Maximum number of threads: %d\n", omp_get_max_threads());
+    #endif
+    #ifdef LAB1
+    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
+    bench_linear(test_amount, new MultiplyMatrixLinear());
+    bench_parallel(test_amount, new MultiplyMatrixParallel());
+    #endif
+    #ifdef LAB2
+    valarray<int> test_amount = {100, 200, 300, 400, 500};
+    bench_linear(test_amount, new FloydWarshallLinear());
+    bench_parallel(test_amount, new FloydWarshallParallel());
+    #endif
 }
