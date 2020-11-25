@@ -1,12 +1,10 @@
 #include <stdio.h>
-#include <omp.h>
-#include <chrono>
 #include <valarray>
+#include <omp.h>
 
-// #include "Algorithm.h"
 #include "Benchmark.h"
 
-#define LAB2
+#define LAB4
 
 #ifdef LAB1
 #include "lab1/MultiplyMatrixLinear.h"
@@ -15,6 +13,10 @@
 #ifdef LAB2
 #include "lab2/FloydWarshallLinear.h"
 #include "lab2/FloydWarshallParallel.h"
+#endif
+#ifdef LAB4
+#include <mpi.h>
+#include "lab4/MultiplyMatrixMpi.h"
 #endif
 
 
@@ -50,21 +52,23 @@ void bench_linear(valarray<int> amounts, Algorithm* alg)
     return;
 }
 
-int main()
+int main(int argc, char **argv)
 {
     srand(16);
-    #ifdef _OPENMP
-    printf("[*]Compiled with OpenMP\n");
-    printf("[*]Maximum number of threads: %d\n", omp_get_max_threads());
-    #endif
     #ifdef LAB1
     valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
     bench_linear(test_amount, new MultiplyMatrixLinear());
     bench_parallel(test_amount, new MultiplyMatrixParallel());
     #endif
     #ifdef LAB2
-    valarray<int> test_amount = {100, 200, 300, 400, 500};
+    
     bench_linear(test_amount, new FloydWarshallLinear());
     bench_parallel(test_amount, new FloydWarshallParallel());
+    #endif
+    #ifdef LAB4
+    valarray<int> test_amount = {1000, 2000, 10000};
+    MPI_Init(&argc, &argv);
+    bench_linear(test_amount, new MultiplyMatrixMpi(argc, argv));
+    MPI_Finalize();
     #endif
 }
