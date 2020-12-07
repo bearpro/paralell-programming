@@ -15,7 +15,6 @@
 #include "lab2/FloydWarshallParallel.h"
 #endif
 #ifdef LAB4
-#include <mpi.h>
 #include "lab4/MultiplyMatrixMpi.h"
 #endif
 
@@ -33,6 +32,7 @@ void bench_parallel(valarray<int> amounts, Algorithm* alg)
     for (size_t ti = 0; ti < thread_count.size(); ti++)
     {
         omp_set_num_threads(thread_count[ti]);
+        alg->SetThreads(thread_count[ti]);
         for (size_t i = 0; i < amounts.size(); i++)
         {
             int n = amounts[i];
@@ -61,14 +61,11 @@ int main(int argc, char **argv)
     bench_parallel(test_amount, new MultiplyMatrixParallel());
     #endif
     #ifdef LAB2
-    
     bench_linear(test_amount, new FloydWarshallLinear());
     bench_parallel(test_amount, new FloydWarshallParallel());
     #endif
     #ifdef LAB4
-    valarray<int> test_amount = {1000, 2000, 10000};
-    MPI_Init(&argc, &argv);
-    bench_linear(test_amount, new MultiplyMatrixMpi(argc, argv));
-    MPI_Finalize();
-    #endif
+    valarray<int> test_amount = {500, 600, 700, 800, 900, 1000};
+    bench_parallel(test_amount, new MultiplyMatrixMpi("standalone-algorithms/lab4/bin/program"));
+#endif
 }

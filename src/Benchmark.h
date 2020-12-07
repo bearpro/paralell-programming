@@ -21,6 +21,7 @@ public:
         for (int i = 0; i < times; i++)
         {
             algorithm->UpdateParam(n);
+            algorithm->SetThreads(threads);
             auto started = system_clock::now();
             algorithm->Run();
             auto elapsed = system_clock::now() - started;
