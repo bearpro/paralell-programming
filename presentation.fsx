@@ -5,7 +5,7 @@ open System.IO
 #nowarn "46"
 let (^) f x = f x
 
-let multiThread, singleThread = "floydwarshall_parallel", "floydwarshall_linear"
+let multiThread, singleThread = "matrix_mul_mpi", "single"
 
 let path = fsi.CommandLineArgs.[1]
 
@@ -27,7 +27,7 @@ let allResults =
     let parseLine (line: string) =
         let items = line.Split(":")
         { Algorithm = items.[0]
-          Processes = if items.[0] = multiThread then Convert.ToInt32 items.[1] else 1
+          Processes = Convert.ToInt32 items.[1] 
           Amount = Convert.ToInt32 items.[2]
           Time = float ^ Convert.ToInt32 items.[3]}
     
