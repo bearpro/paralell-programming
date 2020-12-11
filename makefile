@@ -3,3 +3,4 @@ all:
 
 standalone:
 	mpiCC -ggdb -Wall -O0 -o standalone-algorithms/lab4/bin/program standalone-algorithms/lab4/src/*.cpp
+	mpiCC -ggdb -Wall -O0 -o standalone-algorithms/lab5/bin/program standalone-algorithms/lab5/src/*.cpp

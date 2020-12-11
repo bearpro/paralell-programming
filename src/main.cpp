@@ -4,20 +4,22 @@
 
 #include "Benchmark.h"
 
-#define LAB4
+#define LAB5
 
-#ifdef LAB1
+#ifdef LAB4
 #include "lab1/MultiplyMatrixLinear.h"
 #include "lab1/MultiplyMatrixParallel.h"
 #endif
-#ifdef LAB2
+#ifdef LAB3
 #include "lab2/FloydWarshallLinear.h"
 #include "lab2/FloydWarshallParallel.h"
 #endif
 #ifdef LAB4
 #include "lab4/MultiplyMatrixMpi.h"
 #endif
-
+#ifdef LAB5
+#include "lab5/FloydWarshallMpi.h"
+#endif
 
 using namespace std;
 using namespace chrono;
@@ -55,17 +57,22 @@ void bench_linear(valarray<int> amounts, Algorithm* alg)
 int main(int argc, char **argv)
 {
     srand(16);
-    #ifdef LAB1
+    #ifdef LAB4
     valarray<int> test_amount = {500, 600, 700, 800, 900, 1000, 5000, 10000};
     bench_linear(test_amount, new MultiplyMatrixLinear());
     bench_parallel(test_amount, new MultiplyMatrixParallel());
     #endif
-    #ifdef LAB2
+    #ifdef LAB3
+    valarray<int> test_amount = {100, 200, 300, 400, 500};
     bench_linear(test_amount, new FloydWarshallLinear());
     bench_parallel(test_amount, new FloydWarshallParallel());
     #endif
     #ifdef LAB4
     valarray<int> test_amount = {500, 600, 700, 800, 900, 1000};
     bench_parallel(test_amount, new MultiplyMatrixMpi("standalone-algorithms/lab4/bin/program"));
-#endif
+    #endif
+    #ifdef LAB5
+    valarray<int> test_amount = {100, 200, 300, 400, 500 };
+    bench_parallel(test_amount, new FloydWarshallMpi("standalone-algorithms/lab5/bin/program"));
+    #endif
 }
