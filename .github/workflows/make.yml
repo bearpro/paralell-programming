@@ -1,0 +1,17 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt-get install date.h
+    - run: mkdir ./bin ./standalone-algorithms/lab4/bin
+    - run: make
+    - run: make standalone

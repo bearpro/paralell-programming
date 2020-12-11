@@ -6,11 +6,11 @@
 
 #define LAB6
 
-#ifdef LAB1
+#ifdef LAB4
 #include "lab1/MultiplyMatrixLinear.h"
 #include "lab1/MultiplyMatrixParallel.h"
 #endif
-#ifdef LAB2
+#ifdef LAB3
 #include "lab2/FloydWarshallLinear.h"
 #include "lab2/FloydWarshallParallel.h"
 #endif
@@ -66,7 +66,8 @@ int main(int argc, char **argv)
     bench_linear(test_amount, new MultiplyMatrixLinear());
     bench_parallel(test_amount, new MultiplyMatrixParallel());
     #endif
-    #ifdef LAB2
+    #ifdef LAB3
+    valarray<int> test_amount = {100, 200, 300, 400, 500};
     bench_linear(test_amount, new FloydWarshallLinear());
     bench_parallel(test_amount, new FloydWarshallParallel());
     #endif
